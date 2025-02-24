@@ -181,6 +181,25 @@ export const mockBasicRule = {
     "@now": {
         "name": "当前时间",
         "value": "@now()",
-        "config": []
+        "config": [{
+            "name": "格式",
+            "value": "@now(format)",
+            "config": {
+                "format": "yyyy-MM-dd HH:mm:ss",
+            }
+        },{
+            "name": "单位",
+            "value": "@now(unit)",
+            "config": {
+                "unit": ["second", "minute", "hour", "day", "week", "month", "year"]
+            }
+        },{
+            "name": "单位/格式",
+            "value": "@now(unit, format)",
+            "config": {
+                "unit": ["second", "minute", "hour", "day", "week", "month", "year"],
+                "format": "yyyy-MM-dd HH:mm:ss",
+            }
+        }]
     }
 }
