@@ -1,5 +1,4 @@
 // 使用supabase
-// 定义GetAllList请求
 import supabase from "./SupaConnect";
 
 export const getList = async (
