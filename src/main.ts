@@ -5,8 +5,6 @@ import router from './router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import { createPinia } from 'pinia';
-import { useClerkStore } from './stores/clerk';
 // 样式
 import './style.css'
 import {clerkPlugin} from "@clerk/vue";
