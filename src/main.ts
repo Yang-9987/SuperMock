@@ -7,7 +7,9 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // 样式
 import './style.css'
+// Clerk
 import {clerkPlugin} from "@clerk/vue";
+import { zhCN } from '@clerk/localizations'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -21,5 +23,5 @@ const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 if (!PUBLISHABLE_KEY) {
     throw new Error('Add your Clerk Publishable Key to the .env.local file')
 }
-app.use(clerkPlugin, { publishableKey: PUBLISHABLE_KEY })
+app.use(clerkPlugin, { publishableKey: PUBLISHABLE_KEY, localization: zhCN })
 app.mount('#app')

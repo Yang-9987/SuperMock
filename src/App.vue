@@ -13,7 +13,9 @@
 
           </SignedIn>
           <SignedOut>
-            <SignInButton mode="modal"/>
+            <SignInButton mode="modal">
+              <button>登录</button>
+            </SignInButton>
           </SignedOut>
         </div>
       </el-header>
