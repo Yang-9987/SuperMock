@@ -15,7 +15,6 @@ export interface FieldType {
     rule: string;
     children?: FieldType[];
 }
-
 // Mock规则
 export interface MockRuleType {
     id: string;

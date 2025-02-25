@@ -158,7 +158,10 @@ const handleSave = async () => {
         res = await updateData("Model", model.value.id, model.value)
       } else {
         // 添加
-        res = await insertData("Model", model.value)
+        let paramArr = []
+        delete model.value.id
+        paramArr.push(model.value)
+        res = await insertData("Model", paramArr)
       }
       if (res) {
         emit('save', {status: true, model: model.value})

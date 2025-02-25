@@ -46,7 +46,7 @@ const refreshLoading = ref(false)
 const refreshList = async () => {
   refreshLoading.value = true
   // 使用getList获取数据
-  const res = await getList("Model")
+  const res = await getList( { tableName: "Model" })
   if (res) {
     models.splice(0, models.length, ...res.map(model => ({ ...model, deleteLoading: false })))
   } else {

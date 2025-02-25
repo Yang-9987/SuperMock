@@ -81,6 +81,7 @@ import {ElMessage, ElMessageBox} from "element-plus";
 import ModelEdit from "@/components/Model/ModelEdit.vue";
 import {deleteData, getList} from "@/requests/SupaReq"
 import {formatDateTimeNow, formatDate} from "@/utils/Time";
+import {USER_ID_KEY} from "@/utils/clerkUser";
 
 
 // 展示数据
@@ -112,7 +113,7 @@ onMounted(async () => {
 const refreshList = async () => {
   refreshLoading.value = true
   // 使用getList获取数据
-  const res = await getList("Model")
+  const res = await getList({ tableName: "Model" })
   if (res) {
     models.splice(0, models.length, ...res.map(model => ({ ...model, deleteLoading: false })))
   } else {

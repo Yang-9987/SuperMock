@@ -34,7 +34,7 @@
           <el-input v-model="newRule.name" placeholder="请输入规则名称" clearable />
         </el-form-item>
         <el-form-item label="mock值">
-            <el-select v-model="selectedMockRule" placeholder="请选择mock值" @change="changeBasicMockRule">
+            <el-select filterable v-model="selectedMockRule" placeholder="请选择mock值" @change="changeBasicMockRule">
               <el-option v-for="item in mockRuleList" :key="item.key" :label="item.name + ' - ' + item.value" :value="item" />
             </el-select>
         </el-form-item>
@@ -92,7 +92,7 @@ onMounted(async () => {
 const refreshList = async () => {
   refreshLoading.value = true
   // 使用getList获取数据
-  const res = await getList("MockRule")
+  const res = await getList({tableName: "MockRule"})
   if (res) {
     models.splice(0, models.length, ...res.map(model => ({ ...model, deleteLoading: false })))
   } else {
@@ -155,14 +155,15 @@ const saveRule = async () => {
   await ruleFormRef.value.validate(async valid => {
     if (valid) {
       let res;
-      let paramArray: MockRuleType[] = []
+
       if (newRule.value.id !== ''){
         // 编辑
-        res = await updateData("MockRule", newRule.value.id, paramArray)
+        res = await updateData("MockRule", newRule.value.id, newRule.value)
       } else {
         // 去除
         delete (newRule.value as Partial<MockRuleType>).id;
         // 添加
+        let paramArray: MockRuleType[] = []
         paramArray.push(newRule.value)
         res = await insertData("MockRule", paramArray)
       }
@@ -180,7 +181,7 @@ const saveRule = async () => {
   saveLoading.value = false
 }
 // 删除规则
-const deleteRule = async (row: MockRuleType) => {
+const deleteRule = async (row) => {
   row.deleteLoading = true
   await ElMessageBox.confirm('确认删除该规则吗？', '提示', {
     confirmButtonText: '确定',

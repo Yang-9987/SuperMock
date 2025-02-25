@@ -81,9 +81,9 @@ import {Edit, Setting} from "@element-plus/icons-vue";
 import {ref, watch} from 'vue';
 import {SignedIn, SignedOut, SignInButton, UserButton} from "@clerk/vue";
 import { useUser } from '@clerk/vue'
+import {setUserToLocalStorage} from "@/utils/clerkUser.js";
 
 const { user } = useUser()
-
 const router = useRouter()
 const route = useRoute()
 const activeMenu = ref(route.name)
@@ -91,9 +91,19 @@ const activeMenu = ref(route.name)
 const handleMenuSelect = (index) => {
   router.push({name: index})
 }
-
 watch(route, (newRoute) => {
   activeMenu.value = newRoute.name
+}, {immediate: true})
+watch(user, (newUser) => {
+  console.log('newUser', newUser)
+  // 判断登录状态
+  if (newUser == null) {
+    // 未登录
+
+  } else {
+    // 已登录
+    setUserToLocalStorage(newUser)
+  }
 })
 </script>
 

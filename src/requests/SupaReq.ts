@@ -1,26 +1,44 @@
 // 使用supabase
 import supabase from "./SupaConnect";
+import {USER_ID_KEY} from "@/utils/clerkUser";
 
-export const getList = async (
-    tableName: string,
-    columns: string = '*',
-    page: number = 0,
-    pageSize: number = 0,
-    filters: Record<string, any> = {}
-) => {
+interface GetListParams {
+    tableName: string;
+    columns?: string;
+    page?: number;
+    pageSize?: number;
+    filters?: Record<string, any>;
+}
+
+export const getList = async ({
+                                  tableName,
+                                  columns = '*',
+                                  page = 0,
+                                  pageSize = 0,
+                                  filters = {},
+                              }: GetListParams) => {
     try {
+        console.log(filters)
         // 选取表和列
         let query = supabase.from(tableName).select(columns)
-        // 添加筛选条件
+        // 获取 user_id
+        const userId = localStorage.getItem(USER_ID_KEY);
+        // 添加模糊查询条件（必须存在）
         for (const [key, value] of Object.entries(filters)) {
-            query = query.like(key, '%' + value + '%')
+            if (typeof value === 'boolean') {
+                query = query.eq(key, value); // 布尔类型使用 eq
+            } else {
+                query = query.like(key, '%' + value + '%'); // 字符串类型使用 like
+            }
         }
+        // 添加 user_id 或 level 的条件
+        query = query.or(`user_id.eq.${userId},level.eq.0`);
         // 添加分页选项
-        if (page != 0 && pageSize != 0){
+        if (page != 0 && pageSize != 0) {
             query = query.range((page - 1) * pageSize, page * pageSize - 1)
         }
         // 执行
-        const { data, error } = await query
+        const {data, error} = await query
         if (error) throw new Error(`Error fetching data: ${error.message}`)
         return data
     } catch (error) {
@@ -29,9 +47,13 @@ export const getList = async (
     }
 }
 
-export const insertData = async (table: string,dataList: any[]) => {
+export const insertData = async (table: string, dataList: any[]) => {
+    dataList.forEach(data => {
+        data.user_id = localStorage.getItem(USER_ID_KEY)
+        data.level = "1"
+    })
     try {
-        const { data, error } = await supabase
+        const {data, error} = await supabase
             .from(table)
             .insert(dataList)
             .select()
@@ -45,10 +67,11 @@ export const insertData = async (table: string,dataList: any[]) => {
 
 export const deleteData = async (table: string, id: string) => {
     try {
-        const { error } = await supabase
+        const {error} = await supabase
             .from(table)
             .delete()
             .eq('id', id)
+            .eq('user_id', localStorage.getItem(USER_ID_KEY))
         if (error) throw new Error(`Error deleting data: ${error.message}`)
         return true
     } catch (error) {
@@ -57,12 +80,13 @@ export const deleteData = async (table: string, id: string) => {
     }
 }
 
-export const updateData = async (table: string, id: string, dataList: any[]) => {
+export const updateData = async (table: string, id: string, dataList: any) => {
     try {
-        const { data, error } = await supabase
+        const {data, error} = await supabase
             .from(table)
             .update(dataList)
             .eq('id', id)
+            .eq('user_id', localStorage.getItem(USER_ID_KEY))
             .select()
         if (error) throw new Error(`Error updating data: ${error.message}`)
         return data
