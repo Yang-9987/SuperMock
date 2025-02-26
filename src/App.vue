@@ -8,7 +8,7 @@
           <SignedIn>
             <div class="flex items-center">
               <div class="mr-4">{{ "欢迎，" + user.username }}</div>
-              <UserButton />
+              <UserButton/>
             </div>
 
           </SignedIn>
@@ -41,6 +41,12 @@
                 </el-icon>
                 <span>Mock 规则</span>
               </el-menu-item>
+              <el-menu-item index="mock-link">
+                <el-icon>
+                  <Connection/>
+                </el-icon>
+                <span>Mock 链接</span>
+              </el-menu-item>
             </el-menu>
           </el-aside>
         </SignedIn>
@@ -61,7 +67,7 @@
         <!-- 右侧 Main -->
         <el-main class="p-4">
           <SignedIn>
-            <router-view />
+            <router-view/>
           </SignedIn>
           <SignedOut>
             <div class="flex items-center justify-center h-full">
@@ -77,13 +83,13 @@
 
 <script setup>
 import {useRouter, useRoute} from 'vue-router'
-import {Edit, Setting} from "@element-plus/icons-vue";
+import {Connection, Edit, Setting} from "@element-plus/icons-vue";
 import {ref, watch} from 'vue';
 import {SignedIn, SignedOut, SignInButton, UserButton} from "@clerk/vue";
-import { useUser } from '@clerk/vue'
+import {useUser} from '@clerk/vue'
 import {removeUserFromLocalStorage, setUserToLocalStorage} from "@/utils/clerkUser.js";
 
-const { user } = useUser()
+const {user} = useUser()
 const router = useRouter()
 const route = useRoute()
 const activeMenu = ref(route.name)

@@ -1,9 +1,10 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import ModelManagement from '../views/ModelManagement.vue'
 import MockRules from '../views/MockRules.vue'
 import ModelEdit from '../components/Model/ModelEdit.vue'
+import MockLink from "@/views/MockLink.vue";
 
-const routes = [
+const routes: readonly RouteRecordRaw[] = [
     {
         path: '/',
         redirect: '/model-management'
@@ -30,7 +31,16 @@ const routes = [
         meta: {
             requiresAuth: true
         }
-    }, {
+    },
+    {
+        path: '/mock-link',
+        name: 'MockLink',
+        component: MockLink,
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
         path: '/test',
         name: 'Test',
         component: () => import('../views/Test.vue'),
