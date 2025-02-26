@@ -30,17 +30,33 @@
       <el-form-item label="字段配置">
         <el-table :data="model.fields" row-key="name" :tree-props="{ children: 'children' }">
           <el-table-column prop="name" label="字段名" />
-          <el-table-column prop="type" label="字段类型" />
+          <el-table-column prop="type" label="字段类型">
+            <template #default="{ row }">
+              <el-select v-model="row.type" placeholder="请选择字段类型">
+                <el-option label="字符串" value="string" />
+                <el-option label="整数" value="integer" />
+                <el-option label="浮点数" value="float" />
+                <el-option label="日期" value="date" />
+                <el-option label="日期时间" value="datetime" />
+                <el-option label="布尔值" value="boolean" />
+                <el-option label="数组" value="array" />
+                <el-option label="对象" value="object" />
+                <el-option label="自定义" value="custom" />
+                <el-option label="正则表达式" value="regexp" />
+              </el-select>
+            </template>
+          </el-table-column>
           <el-table-column prop="rule" label="Mock 规则">
             <template #default="{ row }">
-              <el-select v-model="row.rule" placeholder="请选择 Mock 规则" filterable>
+              <el-select v-if="row.type !== 'regexp'" v-model="row.rule" placeholder="请选择 Mock 规则" filterable>
                 <el-option
                     v-for="option in mockOptions(row.type)"
                     :key="option.value"
-                    :label="option.label"
+                    :label="option.label + ' - ' + option.value"
                     :value="option.value"
                 />
               </el-select>
+              <el-input v-else v-model="row.rule" placeholder="请输入正则表达式"/>
             </template>
           </el-table-column>
         </el-table>
@@ -57,6 +73,7 @@
 import {onMounted, ref} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {insertData, updateData} from "@/requests/SupaReq.js";
+import {formatDateTimeNow} from "@/utils/Time.js";
 
 // 回调函数
 const emit = defineEmits(['cancel','save'])
@@ -153,6 +170,7 @@ const handleSave = async () => {
   await formRef.value.validate(async valid => {
     if (valid) {
       let res;
+      model.value.updated_at = formatDateTimeNow()
       if (model.value.id !== ''){
         // 编辑
         res = await updateData("Model", model.value.id, model.value)

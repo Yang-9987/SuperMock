@@ -18,7 +18,6 @@ export const getList = async ({
                                   filters = {},
                               }: GetListParams) => {
     try {
-        console.log(filters)
         // 选取表和列
         let query = supabase.from(tableName).select(columns)
         // 获取 user_id
