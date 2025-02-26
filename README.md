@@ -17,16 +17,13 @@
 - ⚡ 实时请求响应模拟
 - 🔐 基于Clerk的团队权限管理
 - 📦 Supabase数据持久化存储
-- 🛠️ OpenAPI规范支持
-- 📊 请求日志分析
 
 ## 🛠️ 技术栈
 
 **前端框架**: Vue3 + TypeScript + Vite  
 **认证服务**: Clerk  
-**后端即服务**: Supabase  
-**构建工具**: npm  
-**测试框架**: Vitest (推荐添加)
+**后端服务**: Supabase  
+**构建工具**: npm
 
 ## 🚀 快速开始
 
