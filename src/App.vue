@@ -81,7 +81,7 @@ import {Edit, Setting} from "@element-plus/icons-vue";
 import {ref, watch} from 'vue';
 import {SignedIn, SignedOut, SignInButton, UserButton} from "@clerk/vue";
 import { useUser } from '@clerk/vue'
-import {setUserToLocalStorage} from "@/utils/clerkUser.js";
+import {removeUserFromLocalStorage, setUserToLocalStorage} from "@/utils/clerkUser.js";
 
 const { user } = useUser()
 const router = useRouter()
@@ -99,7 +99,7 @@ watch(user, (newUser) => {
   // 判断登录状态
   if (newUser == null) {
     // 未登录
-
+    removeUserFromLocalStorage()
   } else {
     // 已登录
     setUserToLocalStorage(newUser)

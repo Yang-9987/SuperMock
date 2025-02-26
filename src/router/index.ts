@@ -6,7 +6,7 @@ import ModelEdit from '../components/Model/ModelEdit.vue'
 const routes = [
     {
         path: '/',
-        redirect:'/model-management'
+        redirect: '/model-management'
     }, {
         path: '/model-management',
         name: 'model-management',
@@ -29,6 +29,13 @@ const routes = [
         component: ModelEdit,
         meta: {
             requiresAuth: true
+        }
+    }, {
+        path: '/test',
+        name: 'Test',
+        component: () => import('../views/Test.vue'),
+        meta: {
+            requiresAuth: false
         }
     }
 

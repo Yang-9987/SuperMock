@@ -29,10 +29,11 @@
 </template>
 <script setup lang="ts">
 import {reactive, ref, onMounted} from 'vue'
-import {getList} from "@/requests/SupaReq.ts"
+import {getList} from "@/requests/SupaReq"
 import {CopyDocument, Refresh} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
 import Mock from "mockjs";
+import {generateMockTemplate} from "@/utils/tools";
 
 const models = reactive([])
 
@@ -68,18 +69,7 @@ const handleClick = (item) => {
 }
 // 生成数据
 const generatedDataShow = ref('')
-const generateMockTemplate = (fields) => {
-  return fields.reduce((template, field) => {
-    if (field.type === 'object' && field.children) {
-      template[field.name] = generateMockTemplate(field.children)
-    } else if (field.type === 'array' && field.children) {
-      template[field.name + '|1-10'] = [generateMockTemplate(field.children)]
-    } else {
-      template[field.name] = field.rule
-    }
-    return template
-  }, {})
-}
+
 const generateData = () => {
   // 根据activeBtn.value.fields,使用Mock.js生成数据
   if (activeBtn.value && activeBtn.value.fields) {
