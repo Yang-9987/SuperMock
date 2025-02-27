@@ -62,10 +62,11 @@
           {{ formatDate(row.updated_at) }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="150">
+      <el-table-column label="操作" width="200">
         <template #default="{ row }">
-          <el-button link @click="editModel('edit', row)">编辑</el-button>
-          <el-button link @click="deleteRow(row.id)" :loading="row.deleteLoading">删除</el-button>
+          <el-button link @click="editModel('edit', row)" v-if="row.user_id == user_id">编辑</el-button>
+          <el-button link @click="deleteRow(row.id)" :loading="row.deleteLoading" v-if="row.user_id == user_id">删除</el-button>
+          <el-tag v-else type="warning">不属于当前用户无法操作</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -86,6 +87,7 @@ import {USER_ID_KEY} from "@/utils/clerkUser";
 
 // 展示数据
 let models = reactive([])
+const user_id = localStorage.getItem(USER_ID_KEY)
 
 // 搜索参数
 const searchParams = ref({

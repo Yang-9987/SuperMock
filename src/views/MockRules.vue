@@ -4,7 +4,7 @@
     <!-- 这里可以放置自定义 Mock 规则的功能 -->
     <el-tabs v-model="activeTab" class="h-full">
       <!-- 模型列表页签 -->
-      <el-tab-pane label="规则列表" name="list" class="h-full">
+      <el-tab-pane label="规则列表" name="list" class="h-full" :lazy="true">
         <MockRuleList />
       </el-tab-pane>
     </el-tabs>

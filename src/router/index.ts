@@ -34,7 +34,7 @@ const routes: readonly RouteRecordRaw[] = [
     },
     {
         path: '/mock-link',
-        name: 'MockLink',
+        name: 'mock-link',
         component: MockLink,
         meta: {
             requiresAuth: true
