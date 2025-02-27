@@ -15,7 +15,7 @@
       <!-- Middle: Generate Data button -->
       <el-col :span="4" class="h-3/4">
         <div class="flex h-full justify-center items-center">
-          <el-button type="primary" @click="generateData">生成数据</el-button>
+          <GlowButton round type="primary" @click="generateData">生成数据</GlowButton>
         </div>
       </el-col>
 
@@ -34,6 +34,7 @@ import {CopyDocument, Refresh} from "@element-plus/icons-vue";
 import {ElMessage} from "element-plus";
 import Mock from "mockjs";
 import {generateMockTemplate} from "@/utils/tools";
+import GlowButton from "@/components/Custom/GlowButton.vue";
 
 const models = reactive([])
 

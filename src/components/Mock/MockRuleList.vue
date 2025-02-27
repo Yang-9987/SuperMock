@@ -2,7 +2,7 @@
   <div>
     <div>
       <div style="display:flex; justify-content: flex-end;">
-        <el-button type="primary" class="mb-4" @click="editRule('add', null)">添加规则</el-button>
+        <GlowButton round type="primary" class="mb-4" @click="editRule('add', null)">添加规则</GlowButton>
       </div>
     </div>
     <div>
@@ -22,6 +22,7 @@
         </el-table-column>
         <el-table-column label="操作" align="center">
           <template #default="{ row }">
+            <el-button type="primary" @click="editRule('edit', row)" link>编辑</el-button>
             <el-button type="primary" @click="deleteRule(row)" :loading="row.deleteLoading" link>删除</el-button>
           </template>
         </el-table-column>
@@ -75,6 +76,7 @@ import {ElMessage, ElMessageBox} from "element-plus";
 import {MockRuleType} from "@/requests/Types";
 import {formatDateTimeNow, formatDate} from "@/utils/Time";
 import {getMockBasicRulesConfig, getMockBasicRulesKey} from "@/utils/tools";
+import GlowButton from "@/components/Custom/GlowButton.vue";
 
 // 展示数据
 let models = reactive([])
@@ -134,6 +136,7 @@ const editRule = (type: string, row: MockRuleType) => {
   } else if (type === 'edit') {
     // 编辑规则
     newRule.value = Object.assign({}, row)
+    editDialogVisible.value = true
   } else {
     ElMessage.error('未知操作')
   }
@@ -155,9 +158,9 @@ const saveRule = async () => {
   await ruleFormRef.value.validate(async valid => {
     if (valid) {
       let res;
-
       if (newRule.value.id !== ''){
         // 编辑
+        delete newRule.value.deleteLoading
         res = await updateData("MockRule", newRule.value.id, newRule.value)
       } else {
         // 去除

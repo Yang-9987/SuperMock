@@ -13,6 +13,10 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    --primary-color: #409eff;
+    --glow-main-color: #409eff;
+    --glow-secondary-color: #84c1ff;
 }
 
 .el-menu-item.is-active {
@@ -23,7 +27,11 @@
     @apply bg-blue-100 !important;
 }
 
+.el-tabs__content {
+    overflow: visible;
+}
+
 .btn-active {
-    background-color: #409eff;
+    background-color: var(--primary-color);
     color: #fff;
 }

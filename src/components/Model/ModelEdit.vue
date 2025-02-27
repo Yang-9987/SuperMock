@@ -2,7 +2,7 @@
   <div class="p-4">
     <div style="display: flex; flex-direction: row; align-content: center;" class="mb-6">
       <h1 class="text-2xl font-bold">{{ model.id ? '编辑模型' : '添加模型' }}</h1>
-      <el-button @click="handleCancel" style="margin: 0 10px" link>返回</el-button>
+      <GlowButton round @click="handleCancel" style="margin: 0 10px" link>返回</GlowButton>
     </div>
 
     <el-form ref="formRef" :model="model" :rules="rules" label-width="100px">
@@ -62,8 +62,8 @@
         </el-table>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="handleSave" :loading="saveLoading">保存</el-button>
-        <el-button @click="handleCancel">取消</el-button>
+        <GlowButton round type="primary" @click="handleSave" :loading="saveLoading">保存</GlowButton>
+        <GlowButton round @click="handleCancel">取消</GlowButton>
       </el-form-item>
     </el-form>
   </div>
@@ -74,6 +74,7 @@ import {onMounted, ref} from 'vue'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {insertData, updateData} from "@/requests/SupaReq.js";
 import {formatDateTimeNow} from "@/utils/Time.js";
+import GlowButton from "@/components/Custom/GlowButton.vue";
 
 // 回调函数
 const emit = defineEmits(['cancel','save'])

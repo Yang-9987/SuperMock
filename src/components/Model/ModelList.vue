@@ -12,13 +12,13 @@
         <el-input v-model="searchParams.category" placeholder="请输入类别" clearable />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="handleSearch">搜索</el-button>
+        <GlowButton round type="primary" @click="handleSearch">搜索</GlowButton>
       </el-form-item>
     </el-form>
 
     <!-- 操作按钮 -->
     <div style="display:flex; justify-content: flex-end;">
-      <el-button type="primary" class="mb-4" @click="editModel('add', null)">添加模型</el-button>
+      <GlowButton round type="primary" class="mb-4" @click="editModel('add', null)">添加模型</GlowButton>
     </div>
 
 
@@ -83,6 +83,7 @@ import ModelEdit from "@/components/Model/ModelEdit.vue";
 import {deleteData, getList} from "@/requests/SupaReq"
 import {formatDateTimeNow, formatDate} from "@/utils/Time";
 import {USER_ID_KEY} from "@/utils/clerkUser";
+import GlowButton from "@/components/Custom/GlowButton.vue";
 
 
 // 展示数据
